@@ -156,7 +156,7 @@ property and renders into its own (optionally shadow) DOM.
 
 ```html
 <!-- Any page, any framework, or none: -->
-<script type="module" src="https://cdn.jsdelivr.net/npm/@rcpch/digital-pews@1/dist/npews-chart.js"
+<script type="module" src="https://cdn.jsdelivr.net/npm/@ohtf/digital-pews@1/dist/npews-chart.js"
         integrity="sha384-…" crossorigin="anonymous"></script>
 
 <npews-chart id="c"></npews-chart>
@@ -276,7 +276,7 @@ Suggested sequence (each step independently valuable, low regression risk):
    the source stays plain modules), `unpkg`/`jsdelivr` fields, and an SRI step. Document CDN usage.
 4. **Revisit React later, deliberately.** If a concrete consumer needs a React wrapper, a
    Custom Element is trivially wrappable in a ~20-line React component — you can offer
-   `@rcpch/digital-pews-react` as a *thin optional wrapper* over the neutral core, getting dGC
+   `@ohtf/digital-pews-react` as a *thin optional wrapper* over the neutral core, getting dGC
    consistency for React shops **without** forcing React on everyone else.
 
 **Choose React (Option B) instead if** you decide that team/tooling consistency with dGC is the

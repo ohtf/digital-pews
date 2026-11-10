@@ -6,9 +6,9 @@ We welcome feedback and contributions from clinicians, developers, and anyone wi
 
 ### Public issues (preferred for most feedback)
 
-The best way to report a bug, request a feature, or share clinical feedback is through our [GitHub Issues](https://github.com/rcpch/digital-pews/issues).
+The best way to report a bug, request a feature, or share clinical feedback is through our [GitHub Issues](https://github.com/ohtf/digital-pews/issues).
 
-1. Go to <https://github.com/rcpch/digital-pews/issues>
+1. Go to <https://github.com/ohtf/digital-pews/issues>
 2. Click **New issue**
 3. Choose the **Bug report** or **Feature request** template
 4. Fill in as much detail as you can - the templates will guide you
@@ -17,7 +17,7 @@ You will need a free GitHub account. If you cannot create one, see the private r
 
 ### Private reporting (for sensitive clinical or security issues)
 
-For issues that could affect patient safety, clinical workflow, or security - or that must not be discussed publicly - email <pews@rcpch.ac.uk> with a description of the concern. Do not post patient-identifiable data in public issues.
+For issues that could affect patient safety, clinical workflow, or security - or that must not be discussed publicly - email <pews@openhealthtechnology.org> with a description of the concern. Do not post patient-identifiable data in public issues.
 
 ## Before you ask for a new feature
 

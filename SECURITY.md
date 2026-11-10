@@ -4,7 +4,7 @@
 
 Do not report suspected vulnerabilities through public issues.
 
-Report them privately through GitHub's private vulnerability reporting for this repository, or email <pews@rcpch.ac.uk>.
+Report them privately through GitHub's private vulnerability reporting for this repository if enabled, or email <pews@openhealthtechnology.org>.
 
 Include a description of the issue and impact, affected versions or commit hashes, safe reproduction steps, and any suggested mitigation. Redact credentials and patient-identifiable or other sensitive data.
 

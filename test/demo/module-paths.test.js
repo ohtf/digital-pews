@@ -17,8 +17,8 @@ const demoFiles = [
 
 describe('demo module paths', () => {
   it('retain the GitHub Pages project base when resolving chart modules', async () => {
-    const chartUrl = new URL('chart/npews-chart.js', 'https://rcpch.github.io/digital-pews/');
-    expect(chartUrl.href).toBe('https://rcpch.github.io/digital-pews/chart/npews-chart.js');
+    const chartUrl = new URL('chart/npews-chart.js', 'https://ohtf.github.io/digital-pews/');
+    expect(chartUrl.href).toBe('https://ohtf.github.io/digital-pews/chart/npews-chart.js');
 
     for (const file of demoFiles) {
       const contents = await readFile(file, 'utf8');

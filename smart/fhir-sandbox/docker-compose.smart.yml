@@ -114,7 +114,7 @@ services:
       # file. The control panel's "Launch" button deep-links into the launcher
       # with this prefilled, so the user lands on the NPEWS chart in one click.
       - NPEWS_LAUNCH_URL=http://${HOST}:9000/launch.html
-      - ISSUES_URL=https://github.com/rcpch/digital-pews/issues
+      - ISSUES_URL=https://github.com/ohtf/digital-pews/issues
     command:
       - /bin/sh
       - -c

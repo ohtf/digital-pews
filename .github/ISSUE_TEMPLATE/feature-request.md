@@ -18,9 +18,9 @@ assignees: ''
 
 The chart is based on the NHS National Paediatric Early Warning System (NPEWS) specification. Before requesting something new, please check whether it is covered by the national spec:
 
-- [spec/spot-npews-ui-spec.md](https://github.com/rcpch/digital-pews/blob/main/spec/spot-npews-ui-spec.md) - UI requirements
-- [spec/spot-npews-spec.md](https://github.com/rcpch/digital-pews/blob/main/spec/spot-npews-spec.md) - clinical/technical requirements
-- [spec/roadmap.md](https://github.com/rcpch/digital-pews/blob/main/spec/roadmap.md) - what is already planned
+- [spec/spot-npews-ui-spec.md](https://github.com/ohtf/digital-pews/blob/main/spec/spot-npews-ui-spec.md) - UI requirements
+- [spec/spot-npews-spec.md](https://github.com/ohtf/digital-pews/blob/main/spec/spot-npews-spec.md) - clinical/technical requirements
+- [spec/roadmap.md](https://github.com/ohtf/digital-pews/blob/main/spec/roadmap.md) - what is already planned
 
 - [ ] I have read the above and believe this is in scope
 - [ ] I am not sure whether this is in scope

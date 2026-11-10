@@ -38,7 +38,7 @@ export function assembleSite(root = ROOT) {
   }
   cpSync(path.join(root, 'demo/index.html'), path.join(output, 'single-chart.html'));
   const demoPage = path.join(output, 'demo.html');
-  writeFileSync(demoPage, readFileSync(demoPage, 'utf8').replace('href="https://rcpch.github.io/digital-pews/"', 'href="./"'));
+  writeFileSync(demoPage, readFileSync(demoPage, 'utf8').replace('href="https://ohtf.github.io/digital-pews/"', 'href="./"'));
   cpSync(path.join(root, 'chart'), path.join(output, 'chart'), { recursive: true });
   // The same logo is already part of the Zensical assets; do not overwrite its
   // generated CSS/JS asset tree with an entire demo directory.

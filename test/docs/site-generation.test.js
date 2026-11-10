@@ -36,7 +36,7 @@ describe('documentation staging', () => {
     const safety = readFileSync(path.join(destination, 'SAFETY.md'), 'utf8');
     expect(safety).toContain('edit_uri: SAFETY.md');
     expect(safety).toContain('](spec/product-boundary.md)');
-    expect(safety).toContain('https://github.com/rcpch/digital-pews/blob/main/chart/');
+    expect(safety).toContain('https://github.com/ohtf/digital-pews/blob/main/chart/');
   });
 
   it('does not publish private workspace files', () => {

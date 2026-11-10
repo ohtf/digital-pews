@@ -1,6 +1,6 @@
 # Development versions and releases
 
-Status: tooling configured, 10 November 2026. The component remains **0.1.0**; setting up this process does not create a tag or release. No clinical approval is implied by a version number, GitHub prerelease or passing automated checks.
+The first OHTF development snapshot is **0.1.0**, prepared following explicit maintainer authorisation on 10 November 2026. No clinical approval is implied by a version number, GitHub prerelease or passing automated checks. Publication is recorded by the annotated tag and GitHub prerelease in `ohtf/digital-pews`, not by this prose alone.
 
 ## Version policy
 
@@ -20,6 +20,7 @@ After explicit maintainer authorisation to publish a development snapshot:
 s/version++ patch --dry-run   # offline plan; no file, commit, tag or network changes
 s/version++ patch             # defaults to patch if omitted
 s/version++ minor --pr        # explicitly use a release PR
+s/version++ --initial         # first publication of the existing version, before any release tags exist
 ```
 
 Prerequisites: Node.js 22+, npm, Git, authenticated GitHub CLI, git-cliff **2.14.2** (pinned in `.git-cliff-version`), and the docs environment described in [`../s/README.md`](../s/README.md). Obtain git-cliff from its [official release](https://github.com/orhun/git-cliff/releases/tag/v2.14.2), verifying the published checksum before installation. It is MIT/Apache-2.0 licensed and used only by release tooling; the reviewed current release was checked against the official GitHub release API.
@@ -27,18 +28,20 @@ Prerequisites: Node.js 22+, npm, Git, authenticated GitHub CLI, git-cliff **2.14
 The command:
 
 1. Requires `main`, a clean tracked/untracked working tree and exactly synchronised `origin/main` after fetching branches/tags.
-2. Rejects malformed versions, drift, existing tags and unsupported 1.0 bumps. GitHub authentication, network and protection-query errors fail closed rather than assuming direct-push permission.
+2. Rejects malformed versions, drift, existing tags and unsupported 1.0 bumps. `--initial` is mutually exclusive with a bump and requires no existing semantic release tags; it publishes the current 0.x version without incrementing it. GitHub authentication, network and protection-query errors fail closed rather than assuming direct-push permission. All release API/PR operations target the GitHub repository named by `origin`, never a fork's parent selected by GitHub CLI defaults.
 3. Detects classic protection or an active pull-request ruleset. Protected `main` uses a release PR; `--pr` also permits that route voluntarily. `--direct` must not bypass detected protection. GitHub's server-side protections still apply in every mode.
 4. Runs a clean `npm ci`, updates the three version-bearing files, generates `CHANGELOG.md` with git-cliff, then runs the tests, scoring freshness check and complete docs/link build against the proposed version.
 5. Commits only the version files and changelog as `chore(release): vX.Y.Z`. It pushes `main`, or pushes `release/vX.Y.Z` and opens a PR. Release PRs should be merged with a **merge commit**, preserving the release commit subject. There is no second `s/release` command.
-6. Creates **no local tag**. After landing, `auto-tag.yml` verifies an increasing 0.x version and the matching release commit, runs the full reusable CI workflow on that exact push SHA, and only then creates the annotated `vX.Y.Z` tag.
+6. Creates **no local tag**. After landing, `auto-tag.yml` verifies an increasing 0.x version and the matching release commit, runs the full reusable CI workflow on that exact push SHA, and only then creates the annotated `vX.Y.Z` tag. The initial-release exception accepts an unchanged version only with an exact release commit, a newly versioned changelog section, and no existing release tags in the base history. Ordinary changelog edits do not publish a release.
 7. Calls `release.yml` directly through `workflow_call`. This avoids relying on a tag-push event created with `GITHUB_TOKEN`, which does not trigger another workflow. The publish job uses the `development-releases` environment and creates a source-only GitHub prerelease with notes from the committed changelog and an explicit clinical-safety warning. GitHub supplies the source archives; no package is published.
 
 Configure eligible refs and required human reviewers for the `development-releases` GitHub environment before the first release, subject to the repository's plan and maintainer staffing. The workflow names the environment but does not configure its protection. Main-branch protection is still tracked under HS-1; this tooling does not install or bypass protection settings.
 
+Initial OHTF source-snapshot exception: the maintainer explicitly authorised the first `v0.1.0` in the migration request. This development-only release uses that recorded out-of-band human approval rather than requiring a GitHub environment reviewer to repeat it. No existing branch or environment protections are removed or bypassed. Configuring future review gates remains open; this exception grants no authority to publish clinically approved releases or stable 1.0 versions.
+
 ## Changelog and recovery
 
-[`../CHANGELOG.md`](../CHANGELOG.md) is generated from conventional commits using `cliff.toml`. Routine dependency updates, release commits and internal housekeeping are omitted. Security fixes worth communicating should use a meaningful `fix:` commit rather than rely on a routine dependency-bump entry. With no historical tags, the initial file intentionally contains **Unreleased** history; do not fabricate a past 0.1.0 release.
+[`../CHANGELOG.md`](../CHANGELOG.md) is generated from conventional commits using `cliff.toml`. Routine dependency updates, release commits and internal housekeeping are omitted. Security fixes worth communicating should use a meaningful `fix:` commit rather than rely on a routine dependency-bump entry. The first `0.1.0` section captures the inherited development history and OHTF continuation; it does not fabricate an earlier RCPCH release.
 
 To refresh the unreleased history without releasing:
 

@@ -17,7 +17,7 @@ body = """
 {% for group, changes in commits | group_by(attribute="group") %}
 ### {{ group }}
 {% for change in changes -%}
-- {% if change.breaking %}**Breaking:** {% endif %}{{ change.message | escape }} ([{{ change.id | truncate(length=7, end="") }}](https://github.com/rcpch/digital-pews/commit/{{ change.id }}))
+- {% if change.breaking %}**Breaking:** {% endif %}{{ change.message | escape }} ([{{ change.id | truncate(length=7, end="") }}](https://github.com/ohtf/digital-pews/commit/{{ change.id }}))
 {% endfor %}
 {% endfor %}
 """

@@ -6,7 +6,7 @@ import { execFileSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { assertReleaseStart, detectRelease, nextVersion, parseArguments, readVersion, updateVersions } from '../../s/version-release.mjs';
+import { assertReleaseStart, detectRelease, nextVersion, parseArguments, readVersion, repositoryFromRemote, updateVersions } from '../../s/version-release.mjs';
 
 const directories = [];
 afterEach(() => directories.splice(0).forEach(directory => rmSync(directory, { recursive: true, force: true })));
@@ -30,6 +30,7 @@ function initialiseGit(root) {
   git(root, 'config', 'user.name', 'Release test');
   git(root, 'config', 'user.email', 'test@example.invalid');
   git(root, 'config', 'commit.gpgsign', 'false');
+  git(root, 'config', 'tag.gpgSign', 'false');
   git(root, 'config', 'core.hooksPath', '/dev/null');
   git(root, 'add', '.');
   git(root, 'commit', '-m', 'feat: test baseline');
@@ -46,6 +47,7 @@ function copyTools(root) {
 describe('development version policy', () => {
   it('bumps patch/minor explicitly and refuses premature stable releases', () => {
     expect(nextVersion('0.1.0', 'patch')).toBe('0.1.1');
+    expect(nextVersion('0.1.0', 'initial')).toBe('0.1.0');
     expect(nextVersion('0.9.12', 'minor')).toBe('0.10.0');
     expect(() => nextVersion('0.1.0', 'major')).toThrow('1.0');
     for (const version of ['1.0.0', '0.01.0', '0.1.0-alpha', 'not-a-version']) {
@@ -56,9 +58,17 @@ describe('development version policy', () => {
   it('parses a default patch and rejects conflicting or unknown release arguments', () => {
     expect(parseArguments([])).toEqual({ bump: 'patch', mode: 'auto', dryRun: false });
     expect(parseArguments(['minor', '--dry-run', '--pr'])).toEqual({ bump: 'minor', mode: 'pr', dryRun: true });
-    for (const args of [['--force'], ['--pr', '--direct'], ['patch', 'minor']]) {
+    expect(parseArguments(['--initial', '--dry-run'])).toEqual({ bump: 'initial', mode: 'auto', dryRun: true });
+    for (const args of [['--force'], ['--pr', '--direct'], ['patch', 'minor'], ['--initial', 'patch']]) {
       expect(() => parseArguments(args)).toThrow();
     }
+  });
+
+  it('derives the publication repository from origin rather than a fork parent/default', () => {
+    expect(repositoryFromRemote('https://github.com/ohtf/digital-pews.git')).toBe('ohtf/digital-pews');
+    expect(repositoryFromRemote('https://github.com/ohtf/digital-pews/')).toBe('ohtf/digital-pews');
+    expect(repositoryFromRemote('git@github.com:ohtf/digital-pews.git')).toBe('ohtf/digital-pews');
+    expect(() => repositoryFromRemote('https://example.com/ohtf/digital-pews')).toThrow();
   });
 
   it('updates all version mirrors without modifying dependency versions or comments', () => {
@@ -116,6 +126,29 @@ describe('development version policy', () => {
 });
 
 describe('CI release detection on immutable commits', () => {
+  it('allows the existing version only for an explicitly marked, newly documented first release', () => {
+    const root = fixture();
+    writeFileSync(path.join(root, 'CHANGELOG.md'), '# Changelog\n\n## [Unreleased]\n');
+    const base = initialiseGit(root);
+    writeFileSync(path.join(root, 'CHANGELOG.md'), '# Changelog\n\n## [0.1.0] - 2026-11-10\n');
+    git(root, 'add', '.');
+    git(root, 'commit', '-m', 'chore(release): v0.1.0');
+    const head = git(root, 'rev-parse', 'HEAD');
+    expect(detectRelease(root, base, head)).toBe('v0.1.0');
+    git(root, 'tag', 'v0.0.9', base);
+    expect(() => detectRelease(root, base, head)).toThrow('first development release');
+  });
+
+  it('does not treat an unmarked changelog update as an initial release', () => {
+    const root = fixture();
+    writeFileSync(path.join(root, 'CHANGELOG.md'), '# Changelog\n\n## [Unreleased]\n');
+    const base = initialiseGit(root);
+    writeFileSync(path.join(root, 'CHANGELOG.md'), '# Changelog\n\n## [0.1.0] - 2026-11-10\n');
+    git(root, 'add', '.');
+    git(root, 'commit', '-m', 'docs: describe version');
+    expect(detectRelease(root, base, git(root, 'rev-parse', 'HEAD'))).toBeNull();
+  });
+
   it('ignores unchanged versions and accepts a matching release commit', () => {
     const root = fixture();
     const base = initialiseGit(root);

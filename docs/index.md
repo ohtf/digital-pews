@@ -2,12 +2,14 @@
 
 Digital PEWS is an open-source scoring and observation-chart component for integration into a wider clinical system. It is not a complete PEWS solution or an observation-entry system. **No clinically approved release has been designated.**
 
+Development now continues independently under [OHTF](https://github.com/ohtf/digital-pews), following RCPCH's indefinite pause of its PEWS work. Original copyright and attribution are retained; ongoing RCPCH sponsorship is not implied.
+
 Choose a [demonstration scenario](demo/index.md) to explore the chart with synthetic data, or start with the [integration guide](integration.md). The chart remains an independent, framework-neutral component; Zensical provides this site's header, navigation and search.
 
 ## Try and integrate the component
 
 - [Project overview and quick start](../README.md)
-- [Standalone demonstration with synthetic data](https://rcpch.github.io/digital-pews/demo.html)
+- [Standalone demonstration with synthetic data](https://ohtf.github.io/digital-pews/demo.html)
 - [Patient and observation data contract](../spec/data-model.md)
 - [FHIR adapter](../spec/fhir.md)
 - [Product boundary and host responsibilities](../spec/product-boundary.md)
@@ -25,4 +27,4 @@ Choose a [demonstration scenario](demo/index.md) to explore the chart with synth
 
 The site uses Zensical, with navigation for integrators, clinical reviewers and contributors. Specifications, safety records and source provenance are staged from their authoritative repository files rather than maintained twice.
 
-Documentation is the site-root landing page. The standalone harness remains at [`demo.html`](https://rcpch.github.io/digital-pews/demo.html), and old `/docs/` pages redirect to their new locations. Scenario pages preserve the documentation header and sidebar while isolating the chart in an iframe. [Preview and build instructions](../s/README.md) describe the documentation-only toolchain.
+Documentation is the site-root landing page. The standalone harness remains at [`demo.html`](https://ohtf.github.io/digital-pews/demo.html), and old `/docs/` paths on this site redirect to their new locations. Scenario pages preserve the documentation header and sidebar while isolating the chart in an iframe. [Preview and build instructions](../s/README.md) describe the documentation-only toolchain.

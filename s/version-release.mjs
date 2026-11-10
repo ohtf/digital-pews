@@ -24,6 +24,7 @@ export function versionParts(version) {
 export function nextVersion(current, bump) {
   const parts = versionParts(current);
   if (parts[0] !== 0) throw new Error('Only the development 0.x release policy is configured');
+  if (bump === 'initial') return current;
   if (bump === 'major') throw new Error('1.0 requires a separate stability/governance decision; use patch or minor for now');
   if (!['patch', 'minor'].includes(bump)) throw new Error(`Unknown bump: ${bump}`);
   if (bump === 'minor') { parts[1] += 1; parts[2] = 0; }
@@ -72,11 +73,24 @@ export function parseArguments(args) {
   let dryRun = false;
   for (const arg of args) {
     if (['patch', 'minor', 'major'].includes(arg) && !selectedBump) { bump = arg; selectedBump = true; }
+    else if (arg === '--initial' && !selectedBump) { bump = 'initial'; selectedBump = true; }
     else if (arg === '--dry-run') dryRun = true;
     else if (['--pr', '--direct'].includes(arg) && mode === 'auto') mode = arg.slice(2);
     else throw new Error(`Unknown or conflicting argument: ${arg}`);
   }
   return { bump, mode, dryRun };
+}
+
+export function repositoryFromRemote(remote) {
+  const match = remote.match(/^(?:https:\/\/github\.com\/|git@github\.com:)([\w.-]+\/[\w.-]+?)\/?(?:\.git)?$/);
+  if (!match) throw new Error('origin must be an explicit GitHub HTTPS or SSH repository URL');
+  return match[1];
+}
+
+function releaseTags(root, ref) {
+  const args = ['tag', '--list', 'v*'];
+  if (ref) args.push('--merged', ref);
+  return run(root, 'git', args).trim().split('\n').filter(tag => /^v\d+\.\d+\.\d+$/.test(tag));
 }
 
 function api(root, endpoint) {
@@ -101,16 +115,25 @@ export function detectRelease(root, base, head) {
   }
   const previous = JSON.parse(run(root, 'git', ['show', `${base}:package.json`])).version;
   const current = JSON.parse(run(root, 'git', ['show', `${head}:package.json`])).version;
-  if (previous === current) return null;
   const old = versionParts(previous);
   const next = versionParts(current);
+  const tag = `v${current}`;
+  const subjects = run(root, 'git', ['log', '--format=%s', `${base}..${head}`]).trim().split('\n');
+  const marked = subjects.includes(`chore(release): ${tag}`);
+  if (previous === current) {
+    if (!marked) return null;
+    if (next[0] !== 0 || releaseTags(root, base).length) throw new Error('Unchanged versions are allowed only for the first development release');
+    const section = `## [${current}] - `;
+    const before = run(root, 'git', ['show', `${base}:CHANGELOG.md`]);
+    const after = run(root, 'git', ['show', `${head}:CHANGELOG.md`]);
+    if (before.includes(section) || !after.includes(section)) throw new Error('Initial release requires a new versioned changelog section');
+    return tag;
+  }
   const firstDifference = next.findIndex((value, index) => value !== old[index]);
   if (firstDifference === -1 || next[firstDifference] < old[firstDifference] || next[0] !== 0) {
     throw new Error('Release version must increase and remain 0.x');
   }
-  const tag = `v${current}`;
-  const subjects = run(root, 'git', ['log', '--format=%s', `${base}..${head}`]).trim().split('\n');
-  if (!subjects.includes(`chore(release): ${tag}`)) throw new Error(`Missing release commit: chore(release): ${tag}`);
+  if (!marked) throw new Error(`Missing release commit: chore(release): ${tag}`);
   return tag;
 }
 
@@ -119,6 +142,7 @@ async function release(args) {
   assertReleaseStart();
   const current = readVersion();
   const next = nextVersion(current, bump);
+  if (bump === 'initial' && releaseTags(ROOT).length) throw new Error('Initial release requires no existing semantic release tags');
   const tag = `v${next}`;
   console.log(`${current} -> ${next}; ${mode} landing mode${dryRun ? ' (dry run, no changes or network calls)' : ''}`);
   if (dryRun) return;
@@ -134,7 +158,8 @@ async function release(args) {
     throw new Error('Local main must exactly match origin/main before releasing');
   }
   if (run(ROOT, 'git', ['tag', '--list', tag]).trim()) throw new Error(`${tag} already exists`);
-  const repository = run(ROOT, 'gh', ['repo', 'view', '--json', 'nameWithOwner', '--jq', '.nameWithOwner']).trim();
+  if (bump === 'initial' && releaseTags(ROOT).length) throw new Error('Initial release requires no existing semantic release tags');
+  const repository = repositoryFromRemote(run(ROOT, 'git', ['remote', 'get-url', 'origin']).trim());
   const protectedBranch = protectedMain(ROOT, repository);
   if (protectedBranch && mode === 'direct') throw new Error('Direct mode cannot bypass protected main');
   const usePr = mode === 'pr' || protectedBranch;
@@ -152,7 +177,7 @@ async function release(args) {
   run(ROOT, 'git', ['commit', '-m', `chore(release): ${tag}`], { stdio: 'inherit' });
   if (usePr) {
     run(ROOT, 'git', ['push', '-u', 'origin', `release/${tag}`], { stdio: 'inherit' });
-    run(ROOT, 'gh', ['pr', 'create', '--base', 'main', '--head', `release/${tag}`, '--title', `chore(release): ${tag}`,
+    run(ROOT, 'gh', ['pr', 'create', '--repo', repository, '--base', 'main', '--head', `release/${tag}`, '--title', `chore(release): ${tag}`,
       '--body', `Prepare development prerelease ${tag}. This is not clinical approval.\n\nMerge with a merge commit after required checks pass; CI then tags and publishes the prerelease.`], { stdio: 'inherit' });
   } else run(ROOT, 'git', ['push', 'origin', 'main'], { stdio: 'inherit' });
   console.log('No local tag created. CI will validate the landed commit before tagging and publishing a development prerelease.');
@@ -161,7 +186,7 @@ async function release(args) {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const args = process.argv.slice(2);
   if (args.includes('--help')) {
-    console.log('Usage: s/version++ [patch|minor|major] [--dry-run] [--pr|--direct]\nMajor/1.0 releases are currently blocked by policy.');
+    console.log('Usage: s/version++ [patch|minor|major|--initial] [--dry-run] [--pr|--direct]\n--initial publishes the existing version only when no semantic release tags exist.\nMajor/1.0 releases are currently blocked by policy.');
   } else {
     release(args).catch(error => {
       console.error(`Release stopped: ${error.message}\nIf version files were changed, inspect them before retrying. No automatic rollback is performed.`);

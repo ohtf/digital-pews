@@ -7,18 +7,20 @@
 | Field | Value |
 | --- | --- |
 | Product | Digital PEWS NPEWS scoring and observation-chart component |
-| Repository | <https://github.com/rcpch/digital-pews> |
+| Repository | <https://github.com/ohtf/digital-pews> |
 | Configuration item | Current source on the default branch; no clinically approved release has been designated |
 | Intended use | Calculate NPEWS scores from supplied patient and observation data and render the corresponding observation chart for integration into a governed clinical system |
 | Excluded use | Observation entry, EPR records, persistence, audit, operational alerting, reporting, autonomous diagnosis, or use as a complete SPOT/NPEWS solution |
 | Intended users | Clinical-system integrators and suppliers; clinicians may view the component only within a locally governed deployment |
 | Use environment | Embedded within an EPR or other governed clinical application on supported desktop or mobile browsers |
-| Safety documentation owner | RCPCH Digital PEWS project maintainers, <pews@rcpch.ac.uk> |
+| Safety documentation owner | OHTF Digital PEWS project maintainers, <pews@openhealthtechnology.org> |
 | Clinical Safety Officer | Not yet appointed or recorded for this component; required before clinical deployment |
 | Safety status | Prototype evidence under development; not approved for direct clinical use |
 | Last reviewed | Not yet clinically reviewed; initial draft created 2026-08-06 |
 
 ## Product boundary
+
+Stewardship changed to the OHTF continuation after RCPCH paused PEWS work indefinitely. Existing attribution and historical clinical-review evidence are retained; the change of maintainer does not transfer an organisational clinical approval, appoint a CSO or alter any release limitation. The first OHTF `v0.1.0` is a development source snapshot only.
 
 The authoritative [product and compliance boundary](spec/product-boundary.md) limits this repository to a composable scoring and charting component. The host clinical system owns data entry, patient identity, validation, persistence, provenance, audit, user access, alerts, acknowledgement, reporting, and operational clinical workflow.
 
@@ -42,8 +44,8 @@ There is therefore no approved clinical release. The component must not be used 
 
 | Role | Applies? | Organisation/person | Evidence and notes |
 | --- | ---: | --- | --- |
-| Component maintainer | Yes | RCPCH Digital PEWS project maintainers | Own source, tests, documentation, issue triage, and communication of known limitations through this repository |
-| Safety documentation owner | Yes | RCPCH Digital PEWS project maintainers, <pews@rcpch.ac.uk> | Maintains this file pending formal governance arrangements |
+| Component maintainer | Yes | OHTF Digital PEWS project maintainers | Own source, tests, documentation, issue triage, and communication of known limitations through this repository |
+| Safety documentation owner | Yes | OHTF Digital PEWS project maintainers, <pews@openhealthtechnology.org> | Maintains this file pending formal governance arrangements |
 | Clinical Safety Officer | Required before clinical deployment | Not yet appointed or recorded | Must review the intended purpose, hazard analysis, controls, residual risks, and release evidence |
 | Manufacturer / supplier | Deployment-specific | Not determined by this repository | Must determine its role, applicable DCB0129 and medical-device obligations, and provide deployment evidence |
 | Deployer / healthcare organisation | Deployment-specific | Integrating Trust or care organisation | Owns DCB0160 activities, local workflow, transferred controls, training, deployment, monitoring, and incident response |
@@ -124,7 +126,7 @@ Risk ratings are deliberately not assigned yet. Severity, likelihood, acceptabil
 
 ## Incident and concern reporting
 
-Report suspected patient-safety defects privately to <pews@rcpch.ac.uk>. Do not include patient-identifiable data. Security vulnerabilities should follow [`SECURITY.md`](SECURITY.md); a security issue with possible clinical impact must also be treated as a safety hazard.
+Report suspected patient-safety defects privately to <pews@openhealthtechnology.org>. Do not include patient-identifiable data. Security vulnerabilities should follow [`SECURITY.md`](SECURITY.md); a security issue with possible clinical impact must also be treated as a safety hazard.
 
 For each confirmed safety incident or near miss, the maintainers must preserve the report, assess immediate containment, link or add the relevant hazard, identify affected versions, record corrective actions and evidence, and communicate residual risk to known integrators where possible.
 

@@ -19,7 +19,7 @@ function fixture() {
     'site/reference-sources/chart.pdf': '%PDF-test-download',
     'site/assets/theme.css': '/* Zensical assets */',
     'demo/index.html': '<h1>Single chart</h1>',
-    'demo/demo.html': '<a href="https://rcpch.github.io/digital-pews/">Documentation</a>',
+    'demo/demo.html': '<a href="https://ohtf.github.io/digital-pews/">Documentation</a>',
     'demo/demo.js': '// Standalone harness',
     'chart/example.html': '<h1>Component example</h1>',
   };

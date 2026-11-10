@@ -45,7 +45,7 @@ if (command === 'detect') {
   if (start === -1) throw new Error('Release section is missing from CHANGELOG.md');
   const end = changelog.indexOf('\n## [', start + heading.length);
   const section = changelog.slice(start, end === -1 ? undefined : end).trim();
-  writeFileSync('release-notes.md', `**Development prerelease. Not clinically approved for live use.**\n\nSource snapshot only: no NPM package, bundled distribution or clinical deployment approval is provided. See SAFETY.md and spec/product-boundary.md in this tag.\n\n${section}\n`);
+  writeFileSync('release-notes.md', `**Development prerelease. Not clinically approved for live use.**\n\nDevelopment continues independently under OHTF following RCPCH's indefinite pause of its PEWS work. Original attribution is retained; ongoing RCPCH sponsorship is not implied.\n\nSource snapshot only: no NPM package, bundled distribution or clinical deployment approval is provided. See SAFETY.md and spec/product-boundary.md in this tag.\n\n${section}\n`);
 } else if (command === 'publish') {
   validateTag();
   if (!/^[\w.-]+\/[\w.-]+$/.test(repository ?? '')) throw new Error('Invalid repository');

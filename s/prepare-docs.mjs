@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { SCENARIOS } from '../demo/scenarios.js';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const REPOSITORY = 'https://github.com/rcpch/digital-pews/blob/main/';
+const REPOSITORY = 'https://github.com/ohtf/digital-pews/blob/main/';
 const html = value => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 
 function filesUnder(directory) {
@@ -60,7 +60,7 @@ export function prepareDocs(destination = path.join(ROOT, '.docs-source')) {
         return `${before}${link}${fragment ? `#${fragment}` : ''}${after}`;
       },
     );
-    const edit = `---\nedit_uri: ${source}\n---\n\n<small>[Edit this page](https://github.com/rcpch/digital-pews/edit/main/${source})</small>\n\n`;
+    const edit = `---\nedit_uri: ${source}\n---\n\n<small>[Edit this page](https://github.com/ohtf/digital-pews/edit/main/${source})</small>\n\n`;
     writeFileSync(output, edit + content);
   }
 
@@ -86,7 +86,7 @@ ${scenario.description}
 **Synthetic data. Development demonstration only - not approved for clinical use.**
 
 <a href="${standalone}" target="_blank" rel="noopener">Open standalone demo</a>
- · [View scenario source](https://github.com/rcpch/digital-pews/blob/main/demo/scenarios.js)
+ · [View scenario source](https://github.com/ohtf/digital-pews/blob/main/demo/scenarios.js)
 
 <iframe class="pews-demo" title="${html(scenario.title)} - synthetic PEWS demonstration" src="../_demo/demo.html?embed=1#${scenario.id}" loading="lazy"></iframe>
 `);

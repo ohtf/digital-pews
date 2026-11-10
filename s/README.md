@@ -18,9 +18,10 @@ python3 -m venv .venv-docs
 | `s/check-docs-nav` | Stage documentation and check missing/unlisted pages, without Python dependencies |
 | `s/build-site` | Build `_site/`: Zensical at root, standalone harness at `/demo.html`, old `/docs/` redirects |
 | `s/version++ patch --dry-run` | Plan a development version bump without mutations or network calls |
+| `s/version++ --initial` | With explicit authorisation and no release tags, publish the current version as the first development snapshot |
 | `s/version++ patch` / `s/version++ minor` | After explicit approval, validate and land a release commit; CI tags and publishes a development prerelease |
 
-See [`../spec/releases.md`](../spec/releases.md) for release prerequisites, protection detection, recovery and the deliberate 0.x-only policy. Setting up the tooling does not itself bump or release 0.1.0.
+See [`../spec/releases.md`](../spec/releases.md) for release prerequisites, protection detection, recovery and the deliberate 0.x-only policy. Commands target `origin` explicitly, including when this checkout is a fork.
 
 `mkdocs.yml` is the source configuration. `s/prepare-docs.mjs` expands its navigation markers from the scenario catalogue and specification headings into ignored `.docs-config.yml`, and stages content in ignored `.docs-source/`. Edit `docs/`, `spec/`, `SAFETY.md` or the original reference register, never the staged copies. Source-relative Markdown links are mapped to published pages where possible; code links point to GitHub. The development watcher refreshes staged copies and reloads the scenario catalogue automatically. Restart it after changing the generator itself.
 

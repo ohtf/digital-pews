@@ -2,6 +2,8 @@
 
 Plain HTML/CSS/JS implementation of the NHS National Paediatric Early Warning System (NPEWS) observation chart. No framework, no build step, no dependencies.
 
+Development continues under [OHTF](https://github.com/ohtf/digital-pews) following RCPCH's indefinite pause of its PEWS work. The original RCPCH repository is being archived. This is an independent continuation, not a claim of continuing RCPCH sponsorship or clinical approval; existing attribution and copyright notices are retained.
+
 This repository provides a bounded scoring and charting component for integration into a wider clinical system. It is not an EPR workflow or a complete SPOT/NPEWS solution and does not independently claim National PEWS compliance. See the [product and compliance boundary](spec/product-boundary.md).
 
 Clinical safety status, known hazards, transferred controls, and release limitations are documented in [`SAFETY.md`](SAFETY.md). No clinically approved release has been designated.
@@ -35,11 +37,11 @@ Press Ctrl+C to stop the services. Docker Compose will automatically clean up co
 
 A live demo is deployed to GitHub Pages from `main`:
 
-**<https://rcpch.github.io/digital-pews/demo.html>**
+**<https://ohtf.github.io/digital-pews/demo.html>**
 
 This is the full demo harness with the scenario sidebar. It updates automatically on every push to `main`.
 
-**Documentation and guided scenarios:** <https://rcpch.github.io/digital-pews/>. This is now the default landing page. Scenario pages keep the Zensical header and navigation around an isolated interactive demo. Old `/docs/` pages redirect; the standalone harness and embedding examples keep their existing URLs. The former single-chart root page is available at `/single-chart.html` on the published site.
+**Documentation and guided scenarios:** <https://ohtf.github.io/digital-pews/>. This is now the default landing page. Scenario pages keep the Zensical header and navigation around an isolated interactive demo. Old `/docs/` paths on this site redirect; the standalone harness and embedding examples keep their existing paths. The former single-chart root page is available at `/single-chart.html` on the published site. Redirects on the former RCPCH domain remain under that repository's control.
 
 For local documentation preview, install the documentation-only tools and run `s/docs`; see [`s/README.md`](s/README.md). The chart itself still has no build step or runtime dependencies.
 

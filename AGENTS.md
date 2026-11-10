@@ -1,5 +1,7 @@
 # Agent Instructions — Digital PEWS
 
+The active repository is `https://github.com/ohtf/digital-pews/`. The RCPCH origin is being archived after its PEWS work was paused. Keep original copyright/attribution and historical source/issue links intact, but send current code, contribution, deployment and release operations to OHTF. Never infer ongoing RCPCH sponsorship or clinical approval from the original assets.
+
 A plain HTML/CSS/JS implementation of the NHS National Paediatric Early Warning System (NPEWS) observation chart. No framework, no build step, no runtime dependencies. The chart renders vital signs over time on `<canvas>` elements, with colour-coded PEWS scoring bands matched to the NHS paper chart.
 
 This is a **clinical safety tool**. Visual accuracy and spec compliance matter more than aesthetics. When in doubt, match the NHS reference chart.
