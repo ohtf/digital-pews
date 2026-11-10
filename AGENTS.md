@@ -1,10 +1,14 @@
 # Agent Instructions — Digital PEWS
 
-The active repository is `https://github.com/ohtf/digital-pews/`. The RCPCH origin is being archived after its PEWS work was paused. Keep original copyright/attribution and historical source/issue links intact, but send current code, contribution, deployment and release operations to OHTF. Never infer ongoing RCPCH sponsorship or clinical approval from the original assets.
+The project is now managed by the **Open Health Technology Foundation (OHTF)**, <https://openhealthtechnology.org>. The active repository is `https://github.com/ohtf/digital-pews/`. The RCPCH origin is being archived after its PEWS work was paused. Keep original copyright/attribution and historical source/issue links intact, but send current code, contribution, deployment and release operations to OHTF. Never infer ongoing RCPCH sponsorship or clinical approval from the original assets.
 
 A plain HTML/CSS/JS implementation of the NHS National Paediatric Early Warning System (NPEWS) observation chart. No framework, no build step, no runtime dependencies. The chart renders vital signs over time on `<canvas>` elements, with colour-coded PEWS scoring bands matched to the NHS paper chart.
 
 This is a **clinical safety tool**. Visual accuracy and spec compliance matter more than aesthetics. When in doubt, match the NHS reference chart.
+
+## Major announcements
+
+When a major project announcement is warranted, ensure it is also published on **openhealthtechnology.org**, not only in this repository, its documentation site or GitHub release notes. Updates to that website are made through <https://github.com/ohtf/openhealthtechnology.org-website>. Include the website announcement in the release or communications plan and coordinate wording and timing with the maintainers. Obtain approval before externally visible publication, preserve the clinical-safety limitations, and do not report an announcement as published until verified. This is not a requirement to announce every routine change.
 
 ## Read First
 

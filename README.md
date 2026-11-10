@@ -2,7 +2,9 @@
 
 Plain HTML/CSS/JS implementation of the NHS National Paediatric Early Warning System (NPEWS) observation chart. No framework, no build step, no dependencies.
 
-Development continues under [OHTF](https://github.com/ohtf/digital-pews) following RCPCH's indefinite pause of its PEWS work. The original RCPCH repository is being archived. This is an independent continuation, not a claim of continuing RCPCH sponsorship or clinical approval; existing attribution and copyright notices are retained.
+This project is now managed by the [Open Health Technology Foundation (OHTF)](https://openhealthtechnology.org), with development at [`ohtf/digital-pews`](https://github.com/ohtf/digital-pews), following RCPCH's indefinite pause of its PEWS work. The original RCPCH repository is being archived. This is an independent continuation, not a claim of continuing RCPCH sponsorship or clinical approval; existing attribution and copyright notices are retained.
+
+When major project announcements are warranted, they should also be published on [openhealthtechnology.org](https://openhealthtechnology.org). Website updates are made through the [`ohtf/openhealthtechnology.org-website`](https://github.com/ohtf/openhealthtechnology.org-website) repository, coordinated with the project maintainers.
 
 This repository provides a bounded scoring and charting component for integration into a wider clinical system. It is not an EPR workflow or a complete SPOT/NPEWS solution and does not independently claim National PEWS compliance. See the [product and compliance boundary](spec/product-boundary.md).
 
