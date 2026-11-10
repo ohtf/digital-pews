@@ -4,7 +4,7 @@ Notable development changes, generated with git-cliff from conventional commits.
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 All 0.x releases are development prereleases, not clinical deployment approvals.
 
-## [Unreleased]
+## [0.1.0] - 2026-11-10
 
 
 ### Added
@@ -33,6 +33,7 @@ All 0.x releases are development prereleases, not clinical deployment approvals.
 - display component version in toolbar (R60) ([e0c19ca](https://github.com/ohtf/digital-pews/commit/e0c19ca49939cde5ca138397c316441b1a86909f))
 - add Zensical site with guided demo scenarios ([6d2ed9f](https://github.com/ohtf/digital-pews/commit/6d2ed9f878b14230383ec6943f065fc6dda3b0f1))
 - serve documentation at the site root ([0e7af0f](https://github.com/ohtf/digital-pews/commit/0e7af0f1445d9f306c5f8cd8bd959e0db1e434dc))
+- continue Digital PEWS under OHTF ([ae577b2](https://github.com/ohtf/digital-pews/commit/ae577b256a8b0e7182a528aed1b146f00a676080))
 
 
 ### Changed
