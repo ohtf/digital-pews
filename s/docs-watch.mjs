@@ -19,7 +19,7 @@ const refresh = () => {
     try { prepare(); } catch (error) { console.error(`Docs refresh failed: ${error.message}`); }
   }, 250);
 };
-const watchers = ['docs', 'spec', 'reference-sources', 'demo', 'chart'].map(directory =>
+const watchers = ['docs', 'spec', 'reference-sources', 'demo', 'chart', 'theme'].map(directory =>
   watch(path.join(ROOT, directory), { recursive: true }, refresh));
 for (const file of ['README.md', 'SAFETY.md', 'CONTRIBUTING.md', 'SECURITY.md', 'CHANGELOG.md', 'mkdocs.yml']) {
   watchers.push(watch(path.join(ROOT, file), refresh));

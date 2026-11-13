@@ -17,6 +17,7 @@ python3 -m venv .venv-docs
 | `s/docs --no-open` | Preview without opening a browser |
 | `s/check-docs-nav` | Stage documentation and check missing/unlisted pages, without Python dependencies |
 | `s/build-site` | Build `_site/`: Zensical at root, standalone harness at `/demo.html`, old `/docs/` redirects |
+| `s/sync-ohtf-theme [--check] /path/to/openhealthtechnology.org-website` | Deliberately import or verify the pinned OHTF branding snapshot; never needed for normal builds |
 | `s/version++ patch --dry-run` | Plan a development version bump without mutations or network calls |
 | `s/version++ --initial` | With explicit authorisation and no release tags, publish the current version as the first development snapshot |
 | `s/version++ patch` / `s/version++ minor` | After explicit approval, validate and land a release commit; CI tags and publishes a development prerelease |

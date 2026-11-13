@@ -47,6 +47,8 @@ This is the full demo harness with the scenario sidebar. It updates automaticall
 
 For local documentation preview, install the documentation-only tools and run `s/docs`; see [`s/README.md`](s/README.md). The chart itself still has no build step or runtime dependencies.
 
+The documentation uses the main OHTF website's exact branding through a pinned, reusable [OHTF theme bundle](theme/ohtf/README.md). It includes the shared palette, mark, typography and light/dark settings; the clinical chart retains its independent NHS styling. The bundle documents adoption by other OHTF project sites and deliberate updates from the canonical website.
+
 ### Demo app
 
 - Serves at <http://localhost:8000>
@@ -222,3 +224,5 @@ The component is currently **0.1.0**, with an experimental API and no clinically
 ## Licence
 
 Source code is licensed under [LGPL-3.0-or-later](LICENSE). Documentation and clinical content are licensed under CC-BY-SA-4.0. The NHS SPOT/NPEWS specification and reference chart images remain the property of NHS England.
+
+The imported OHTF branding assets and generated shared configuration in `theme/ohtf/` are CC-BY-SA-4.0, copyright Open Health Technology Foundation contributors. See the [bundle's provenance and reuse notes](theme/ohtf/README.md) and [`REUSE.toml`](REUSE.toml) for per-file notices.

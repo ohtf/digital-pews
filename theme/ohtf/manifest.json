@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "sourceRepository": "https://github.com/ohtf/openhealthtechnology.org-website",
+  "sourceRevision": "f020d4a18021fb01c47f518f241474d9641dae7d",
+  "license": "CC-BY-SA-4.0",
+  "sourceFiles": {
+    "mkdocs.yml": "cc0be13a557f06491c3d7e62681de903ee8f2b6dc3c9feadf2825839677f5b58",
+    "docs/stylesheets/extra.css": "ca1af02747023dd42cefae0b978312f65ef7eb0e78b7276cef8c83f1993b8fc8",
+    "docs/assets/ohtf-mark.svg": "b2459926558678267458435004f048bd25b8cea1fcac126c13077f467ff31e77"
+  },
+  "files": {
+    "base.yml": "fc2881064de01267bd14ca0fb37cb53bbfeebdb7a6048121e4fda53009202a30",
+    "assets/ohtf.css": "ca1af02747023dd42cefae0b978312f65ef7eb0e78b7276cef8c83f1993b8fc8",
+    "assets/ohtf-mark.svg": "b2459926558678267458435004f048bd25b8cea1fcac126c13077f467ff31e77"
+  }
+}

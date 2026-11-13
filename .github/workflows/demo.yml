@@ -27,6 +27,7 @@ on:
       - "chart/**"
       - "demo/**"
       - "docs/**"
+      - "theme/**"
       - "spec/**"
       - "reference-sources/**"
       - "s/**"

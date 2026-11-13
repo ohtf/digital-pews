@@ -2,17 +2,12 @@
    SPDX-License-Identifier: LGPL-3.0-or-later */
 
 :root {
-  --pews-brand: #0d0d58;
-  --pews-link: #006cb7;
-  --pews-border: #b5c6ce;
-  --pews-surface: #ffffff;
-  --md-primary-fg-color: var(--pews-brand);
-  --md-accent-fg-color: var(--pews-link);
+  --pews-border: var(--md-default-fg-color--lightest);
 }
 
-.md-grid { max-width: 100%; }
-.md-header__button.md-logo img { width: 6rem; height: auto; }
-.md-header__button.md-logo { background: var(--pews-surface); border-radius: 0.15rem; }
+/* Ordinary documentation keeps the main OHTF site's reading measure. Only the
+   chart scenarios need a wide working area; branding belongs in theme/ohtf/. */
+body:has(.pews-demo) .md-grid { max-width: 100%; }
 .pews-demo {
   display: block;
   width: 100%;

@@ -1,6 +1,7 @@
 # SPDX-FileCopyrightText: 2026 The Royal College of Paediatrics and Child Health
 # SPDX-License-Identifier: LGPL-3.0-or-later
 # s/prepare-docs.mjs expands nav markers and stages authoritative source files.
+INHERIT: theme/ohtf/base.yml
 site_name: Digital PEWS
 site_description: Open-source paediatric early warning scoring and charting component
 site_url: https://ohtf.github.io/digital-pews/
@@ -9,11 +10,17 @@ repo_name: ohtf/digital-pews
 edit_uri: edit/main/
 docs_dir: .docs-source
 site_dir: site
-theme:
-  variant: modern
-  font: false
 extra_css:
+  - ohtf/ohtf.css
   - stylesheets/extra.css
+copyright: >-
+  A Foundation Project of <a href="https://openhealthtechnology.org/">Open Health Technology Foundation</a>.<br>
+  Open Health Technology CIC is a community interest company registered in England and Wales,
+  company number <a href="https://find-and-update.company-information.service.gov.uk/company/17544421">17544421</a>.
+  Registered office: 5 Brooklands Road, Sale, M33 3SD, United Kingdom.<br>
+  Project and third-party licensing: <a href="https://github.com/ohtf/digital-pews#licence">licence notices</a>.
+  OHTF theme: <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.<br>
+  News and updates: <a href="https://openhealthhub.org/t/open-health-technology-foundation-cic-start-here-join-the-mailing-list/3094">join the OHTF mailing list</a> on Open Health Hub.
 nav:
   - Start here: index.md
   - Demonstration:

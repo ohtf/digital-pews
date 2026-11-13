@@ -6,6 +6,7 @@ import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, write
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SCENARIOS } from '../demo/scenarios.js';
+import { stageTheme } from '../theme/ohtf/stage.mjs';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const REPOSITORY = 'https://github.com/ohtf/digital-pews/blob/main/';
@@ -25,6 +26,7 @@ export function prepareDocs(destination = path.join(ROOT, '.docs-source')) {
   }
   rmSync(destination, { recursive: true, force: true });
   mkdirSync(destination, { recursive: true });
+  stageTheme(destination);
   const sources = new Map();
   for (const file of filesUnder(path.join(ROOT, 'docs'))) {
     sources.set(path.relative(ROOT, file), path.relative(path.join(ROOT, 'docs'), file));
