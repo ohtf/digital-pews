@@ -219,3 +219,5 @@ To add a scenario, append an object to `SCENARIOS`:
 ## Approval Required
 
 Ask before publishing releases, deleting branches, force-pushing, or taking externally visible actions.
+
+Current Git operations target the explicitly named `ohtf` remote (`https://github.com/ohtf/digital-pews.git`), with `main` tracking `ohtf/main`. If retained, the archived RCPCH remote is named `rcpch`. Do not assume `origin` exists or select a fork's parent through GitHub CLI defaults. `s/version++` requires `ohtf` and validates its fetch/push targets; fresh clones must rename their official OHTF `origin` remote before releasing. The theme importer checks the separate website source checkout's own `origin`; that is not this repository's publication target.

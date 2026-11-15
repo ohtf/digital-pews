@@ -22,7 +22,7 @@ python3 -m venv .venv-docs
 | `s/version++ --initial` | With explicit authorisation and no release tags, publish the current version as the first development snapshot |
 | `s/version++ patch` / `s/version++ minor` | After explicit approval, validate and land a release commit; CI tags and publishes a development prerelease |
 
-See [`../spec/releases.md`](../spec/releases.md) for release prerequisites, protection detection, recovery and the deliberate 0.x-only policy. Commands target `origin` explicitly, including when this checkout is a fork.
+See [`../spec/releases.md`](../spec/releases.md) for release prerequisites, protection detection, recovery and the deliberate 0.x-only policy. Release commands target the named `ohtf` remote explicitly and require its fetch/push URLs to identify `ohtf/digital-pews`. Rename `origin` to `ohtf` in a fresh official clone before releasing.
 
 `mkdocs.yml` is the source configuration. `s/prepare-docs.mjs` expands its navigation markers from the scenario catalogue and specification headings into ignored `.docs-config.yml`, and stages content in ignored `.docs-source/`. Edit `docs/`, `spec/`, `SAFETY.md` or the original reference register, never the staged copies. Source-relative Markdown links are mapped to published pages where possible; code links point to GitHub. The development watcher refreshes staged copies and reloads the scenario catalogue automatically. Restart it after changing the generator itself.
 

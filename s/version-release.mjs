@@ -7,6 +7,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const RELEASE_REMOTE = 'ohtf';
 const VERSION = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/;
 const FILES = ['package.json', 'package-lock.json', 'chart/version.js', 'CHANGELOG.md'];
 const json = (root, file) => JSON.parse(readFileSync(path.join(root, file), 'utf8'));
@@ -83,8 +84,19 @@ export function parseArguments(args) {
 
 export function repositoryFromRemote(remote) {
   const match = remote.match(/^(?:https:\/\/github\.com\/|git@github\.com:)([\w.-]+\/[\w.-]+?)\/?(?:\.git)?$/);
-  if (!match) throw new Error('origin must be an explicit GitHub HTTPS or SSH repository URL');
+  if (!match) throw new Error('Release remote must be an explicit GitHub HTTPS or SSH repository URL');
   return match[1];
+}
+
+export function releaseRepository(root = ROOT) {
+  const urls = [
+    ...run(root, 'git', ['remote', 'get-url', '--all', RELEASE_REMOTE]).trim().split('\n'),
+    ...run(root, 'git', ['remote', 'get-url', '--push', '--all', RELEASE_REMOTE]).trim().split('\n'),
+  ];
+  if (!urls.every(url => repositoryFromRemote(url) === 'ohtf/digital-pews')) {
+    throw new Error('The ohtf release remote must fetch and push only ohtf/digital-pews');
+  }
+  return 'ohtf/digital-pews';
 }
 
 function releaseTags(root, ref) {
@@ -147,19 +159,19 @@ async function release(args) {
   console.log(`${current} -> ${next}; ${mode} landing mode${dryRun ? ' (dry run, no changes or network calls)' : ''}`);
   if (dryRun) return;
 
+  const repository = releaseRepository();
   for (const command of ['gh', 'npm', 'git-cliff']) run(ROOT, command, ['--version']);
   if (!existsSync(path.join(ROOT, '.venv-docs/bin/zensical'))) throw new Error('Install the docs environment first (see s/README.md)');
   const cliffVersion = readFileSync(path.join(ROOT, '.git-cliff-version'), 'utf8').trim();
   if (run(ROOT, 'git-cliff', ['--version']).trim() !== `git-cliff ${cliffVersion}`) {
     throw new Error(`Install git-cliff ${cliffVersion} before releasing (see spec/releases.md)`);
   }
-  run(ROOT, 'git', ['fetch', 'origin', 'main', '--tags'], { stdio: 'inherit' });
-  if (run(ROOT, 'git', ['rev-parse', 'HEAD']) !== run(ROOT, 'git', ['rev-parse', 'origin/main'])) {
-    throw new Error('Local main must exactly match origin/main before releasing');
+  run(ROOT, 'git', ['fetch', RELEASE_REMOTE, 'main', '--tags'], { stdio: 'inherit' });
+  if (run(ROOT, 'git', ['rev-parse', 'HEAD']) !== run(ROOT, 'git', ['rev-parse', `${RELEASE_REMOTE}/main`])) {
+    throw new Error('Local main must exactly match ohtf/main before releasing');
   }
   if (run(ROOT, 'git', ['tag', '--list', tag]).trim()) throw new Error(`${tag} already exists`);
   if (bump === 'initial' && releaseTags(ROOT).length) throw new Error('Initial release requires no existing semantic release tags');
-  const repository = repositoryFromRemote(run(ROOT, 'git', ['remote', 'get-url', 'origin']).trim());
   const protectedBranch = protectedMain(ROOT, repository);
   if (protectedBranch && mode === 'direct') throw new Error('Direct mode cannot bypass protected main');
   const usePr = mode === 'pr' || protectedBranch;
@@ -176,10 +188,10 @@ async function release(args) {
   run(ROOT, 'git', ['add', '--', ...FILES]);
   run(ROOT, 'git', ['commit', '-m', `chore(release): ${tag}`], { stdio: 'inherit' });
   if (usePr) {
-    run(ROOT, 'git', ['push', '-u', 'origin', `release/${tag}`], { stdio: 'inherit' });
+    run(ROOT, 'git', ['push', '-u', RELEASE_REMOTE, `release/${tag}`], { stdio: 'inherit' });
     run(ROOT, 'gh', ['pr', 'create', '--repo', repository, '--base', 'main', '--head', `release/${tag}`, '--title', `chore(release): ${tag}`,
       '--body', `Prepare development prerelease ${tag}. This is not clinical approval.\n\nMerge with a merge commit after required checks pass; CI then tags and publishes the prerelease.`], { stdio: 'inherit' });
-  } else run(ROOT, 'git', ['push', 'origin', 'main'], { stdio: 'inherit' });
+  } else run(ROOT, 'git', ['push', RELEASE_REMOTE, 'main'], { stdio: 'inherit' });
   console.log('No local tag created. CI will validate the landed commit before tagging and publishing a development prerelease.');
 }
 

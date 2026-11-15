@@ -6,7 +6,7 @@ import { execFileSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { assertReleaseStart, detectRelease, nextVersion, parseArguments, readVersion, repositoryFromRemote, updateVersions } from '../../s/version-release.mjs';
+import { assertReleaseStart, detectRelease, nextVersion, parseArguments, readVersion, releaseRepository, repositoryFromRemote, updateVersions } from '../../s/version-release.mjs';
 
 const directories = [];
 afterEach(() => directories.splice(0).forEach(directory => rmSync(directory, { recursive: true, force: true })));
@@ -64,11 +64,39 @@ describe('development version policy', () => {
     }
   });
 
-  it('derives the publication repository from origin rather than a fork parent/default', () => {
+  it('parses explicit GitHub remote URLs rather than relying on GitHub CLI defaults', () => {
     expect(repositoryFromRemote('https://github.com/ohtf/digital-pews.git')).toBe('ohtf/digital-pews');
     expect(repositoryFromRemote('https://github.com/ohtf/digital-pews/')).toBe('ohtf/digital-pews');
     expect(repositoryFromRemote('git@github.com:ohtf/digital-pews.git')).toBe('ohtf/digital-pews');
     expect(() => repositoryFromRemote('https://example.com/ohtf/digital-pews')).toThrow();
+  });
+
+  it('uses the named ohtf remote even when origin points to the archived repository', () => {
+    const root = fixture();
+    initialiseGit(root);
+    git(root, 'remote', 'add', 'origin', 'https://github.com/rcpch/digital-pews.git');
+    git(root, 'remote', 'add', 'ohtf', 'https://github.com/ohtf/digital-pews.git');
+    expect(releaseRepository(root)).toBe('ohtf/digital-pews');
+    git(root, 'remote', 'set-url', '--push', 'ohtf', 'git@github.com:ohtf/digital-pews.git');
+    expect(releaseRepository(root)).toBe('ohtf/digital-pews');
+  });
+
+  it('fails closed without ohtf rather than falling back to origin', () => {
+    const root = fixture();
+    initialiseGit(root);
+    git(root, 'remote', 'add', 'origin', 'https://github.com/ohtf/digital-pews.git');
+    expect(() => releaseRepository(root)).toThrow();
+  });
+
+  it('rejects incorrect fetch URLs and any additional non-OHTF push target', () => {
+    const root = fixture();
+    initialiseGit(root);
+    git(root, 'remote', 'add', 'ohtf', 'https://github.com/rcpch/digital-pews.git');
+    expect(() => releaseRepository(root)).toThrow('only ohtf/digital-pews');
+    git(root, 'remote', 'set-url', 'ohtf', 'https://github.com/ohtf/digital-pews.git');
+    git(root, 'remote', 'set-url', '--add', '--push', 'ohtf', 'https://github.com/ohtf/digital-pews.git');
+    git(root, 'remote', 'set-url', '--add', '--push', 'ohtf', 'https://github.com/rcpch/digital-pews.git');
+    expect(() => releaseRepository(root)).toThrow('only ohtf/digital-pews');
   });
 
   it('updates all version mirrors without modifying dependency versions or comments', () => {
