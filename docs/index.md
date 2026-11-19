@@ -2,6 +2,10 @@
 
 Digital PEWS is an open-source scoring and observation-chart component for integration into a wider clinical system. It is not a complete PEWS solution or an observation-entry system. **No clinically approved release has been designated.**
 
+[![Inpatient NPEWS chart showing synthetic respiratory, oxygen and heart-rate observations over time](img/inpatient-chart.png)](https://ohtf.github.io/digital-pews/demo/5-12y-deterioration/)
+
+Inpatient NPEWS prototype with synthetic data. Not approved for clinical use. [Explore this scenario](https://ohtf.github.io/digital-pews/demo/5-12y-deterioration/).
+
 Development now continues independently under [OHTF](https://github.com/ohtf/digital-pews), following RCPCH's indefinite pause of its PEWS work. Original copyright and attribution are retained; ongoing RCPCH sponsorship is not implied.
 
 Choose a [demonstration scenario](demo/index.md) to explore the chart with synthetic data, or start with the [integration guide](integration.md). The chart remains an independent, framework-neutral component; Zensical provides this site's header, navigation and search.

@@ -19,6 +19,12 @@ function filesUnder(directory) {
   });
 }
 
+export function isPublicReferenceSource(source) {
+  // Restricted alpha documents supplied for private review, not publication.
+  const restricted = path.join('reference-sources', 'ed-pews');
+  return source !== restricted && !source.startsWith(`${restricted}${path.sep}`);
+}
+
 export function prepareDocs(destination = path.join(ROOT, '.docs-source')) {
   // This directory is generated exclusively by this script, never user source.
   if (destination === ROOT || !path.basename(destination).startsWith('.docs-source')) {
@@ -33,6 +39,9 @@ export function prepareDocs(destination = path.join(ROOT, '.docs-source')) {
   }
   for (const directory of ['spec', 'reference-sources']) {
     for (const file of filesUnder(path.join(ROOT, directory))) {
+      // These supplied alpha documents are restricted to private review. Never
+      // stage them for Pages, including when they exist only in a local checkout.
+      if (!isPublicReferenceSource(path.relative(ROOT, file))) continue;
       sources.set(path.relative(ROOT, file), path.relative(ROOT, file));
     }
   }

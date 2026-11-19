@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
 import { afterAll, describe, expect, it } from 'vitest';
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { prepareDocs, checkNavigation } from '../../s/prepare-docs.mjs';
+import { prepareDocs, checkNavigation, isPublicReferenceSource } from '../../s/prepare-docs.mjs';
 import { SCENARIOS } from '../../demo/scenarios.js';
 
 const temporary = mkdtempSync(path.join(tmpdir(), 'pews-docs-'));
@@ -42,5 +42,27 @@ describe('documentation staging', () => {
   it('does not publish private workspace files', () => {
     expect(config).not.toContain('.private');
     expect(readFileSync(path.join(destination, 'index.md'), 'utf8')).not.toContain('data:image/');
+    expect(existsSync(path.join(destination, 'reference-sources/ed-pews'))).toBe(false);
+  });
+
+  it('excludes the restricted reference directory even when those files are absent in CI', () => {
+    for (const file of ['alpha.pdf', 'clinical.xlsx', 'nested/ui.xlsx']) {
+      expect(isPublicReferenceSource(path.join('reference-sources', 'ed-pews', file))).toBe(false);
+    }
+    expect(isPublicReferenceSource(path.join('reference-sources', 'ed-pews'))).toBe(false);
+    for (const file of ['README.md', 'emergency-department-npews-chart-5-12-years-GCS.pdf', 'images/chart-5-12-years-1.png']) {
+      expect(isPublicReferenceSource(path.join('reference-sources', file))).toBe(true);
+    }
+  });
+
+  it('stages one shared hero image for the landing page and project overview', () => {
+    const image = readFileSync(path.join(destination, 'img/inpatient-chart.png'));
+    expect(image.equals(readFileSync(new URL('../../docs/img/inpatient-chart.png', import.meta.url)))).toBe(true);
+    for (const file of ['index.md', 'project.md']) {
+      const page = readFileSync(path.join(destination, file), 'utf8');
+      expect(page).toContain('](img/inpatient-chart.png)');
+      expect(page).toContain('Inpatient NPEWS prototype with synthetic data. Not approved for clinical use.');
+      expect(page).not.toContain('.private/');
+    }
   });
 });

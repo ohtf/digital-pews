@@ -1,6 +1,14 @@
 version = 1
 
 [[annotations]]
+# Synthetic inpatient chart capture, 18 November 2026; cropped upper rows.
+# Source: demo scenario 5-12y-deterioration, rendered by the project component.
+path = ["docs/img/inpatient-chart.png"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = ["2026 The Royal College of Paediatrics and Child Health", "2026 Open Health Technology Foundation contributors"]
+SPDX-License-Identifier = "LGPL-3.0-or-later"
+
+[[annotations]]
 path = [
   "*.md",
   "spec/*.md",

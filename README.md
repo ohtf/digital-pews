@@ -2,6 +2,10 @@
 
 Plain HTML/CSS/JS implementation of the NHS National Paediatric Early Warning System (NPEWS) observation chart. No framework, no build step, no dependencies.
 
+[![Inpatient NPEWS chart showing synthetic respiratory, oxygen and heart-rate observations over time](docs/img/inpatient-chart.png)](https://ohtf.github.io/digital-pews/demo/5-12y-deterioration/)
+
+Inpatient NPEWS prototype with synthetic data. Not approved for clinical use. [Explore the demonstration](https://ohtf.github.io/digital-pews/demo/5-12y-deterioration/).
+
 This project is now managed by the [Open Health Technology Foundation (OHTF)](https://openhealthtechnology.org), with development at [`ohtf/digital-pews`](https://github.com/ohtf/digital-pews), following RCPCH's indefinite pause of its PEWS work. The original RCPCH repository is being archived. This is an independent continuation, not a claim of continuing RCPCH sponsorship or clinical approval; existing attribution and copyright notices are retained.
 
 When major project announcements are warranted, they should also be published on [openhealthtechnology.org](https://openhealthtechnology.org). Website updates are made through the [`ohtf/openhealthtechnology.org-website`](https://github.com/ohtf/openhealthtechnology.org-website) repository, coordinated with the project maintainers.
