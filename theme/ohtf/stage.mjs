@@ -11,7 +11,7 @@ const sha256 = data => createHash('sha256').update(data).digest('hex');
 
 export function verifyTheme(root = ROOT) {
   const manifest = JSON.parse(readFileSync(path.join(root, 'manifest.json'), 'utf8'));
-  const expected = ['assets/ohtf-mark.svg', 'assets/ohtf.css', 'base.yml'];
+  const expected = ['assets/ohtf-avatar.svg', 'assets/ohtf-mark.svg', 'assets/ohtf.css', 'base.yml'];
   if (manifest.schemaVersion !== 1 || !/^[a-f0-9]{40}$/.test(manifest.sourceRevision) ||
       JSON.stringify(Object.keys(manifest.files).sort()) !== JSON.stringify(expected)) {
     throw new Error('Unsupported OHTF theme manifest');
@@ -28,7 +28,7 @@ export function stageTheme(docsDirectory, root = ROOT) {
   verifyTheme(root);
   const output = path.join(docsDirectory, 'ohtf');
   mkdirSync(output, { recursive: true });
-  for (const file of ['ohtf.css', 'ohtf-mark.svg']) {
+  for (const file of ['ohtf.css', 'ohtf-mark.svg', 'ohtf-avatar.svg']) {
     writeFileSync(path.join(output, file), readFileSync(path.join(root, 'assets', file)));
   }
 }

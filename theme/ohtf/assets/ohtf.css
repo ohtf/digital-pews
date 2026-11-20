@@ -433,3 +433,73 @@
 .md-typeset table:not([class]) thead tr:has(th:empty) {
   display: none;
 }
+
+/* Affiliation and core team lines under an adviser's role
+   (overrides/advisers.html). */
+.md-typeset .ohtf-adviser__affiliation,
+.md-typeset .ohtf-adviser__team {
+  margin: 0.2rem 0 0;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--md-default-fg-color--light);
+}
+
+/* Header logo at twice the theme's default size, with tighter padding so
+   the header grows as little as possible. */
+.md-header__button.md-logo {
+  padding: 0.2rem;
+  margin: 0.1rem 0.2rem;
+}
+
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 2.4rem;
+}
+
+/* Note admonitions in brand tints rather than the theme's default blue. */
+.md-typeset .admonition.note,
+.md-typeset details.note {
+  border-color: var(--ohtf-surgical-green-40);
+  background-color: var(--ohtf-surgical-green-10);
+}
+
+.md-typeset .note > .admonition-title::before,
+.md-typeset .note > summary::before {
+  background-color: var(--ohtf-surgical-green);
+}
+
+[data-md-color-scheme="slate"] .md-typeset .admonition.note,
+[data-md-color-scheme="slate"] .md-typeset details.note {
+  border-color: var(--ohtf-surgical-green-80);
+  background-color: rgba(158, 183, 177, 0.1);
+}
+
+[data-md-color-scheme="slate"] .md-typeset .note > .admonition-title::before,
+[data-md-color-scheme="slate"] .md-typeset .note > summary::before {
+  background-color: var(--ohtf-surgical-green-40);
+}
+
+/* The forceps mark shown on the logo story page. */
+.md-typeset img.ohtf-logo-figure {
+  display: block;
+  margin: 0 0 1.25rem;
+}
+
+[data-md-color-scheme="slate"] .md-typeset img.ohtf-logo-figure {
+  filter: brightness(0) invert(0.86);
+}
+
+/* Landing page: keep the navigation sidebar in the page so the phone and
+   tablet menu drawer works, but hide it on wide screens, where the
+   navigation tabs replace it (overrides/home.html). */
+@media screen and (min-width: 76.25em) {
+  .md-main__inner:has(> .md-content.ohtf-home) > .md-sidebar--primary {
+    display: none;
+  }
+
+  /* The theme widens the content margin whenever a sidebar is present,
+     even a hidden one; keep the landing page aligned with the hero. */
+  .md-main__inner > .md-sidebar--primary ~ .md-content.ohtf-home > .md-content__inner {
+    margin-left: 0.8rem;
+  }
+}

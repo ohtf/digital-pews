@@ -79,6 +79,7 @@ export function prepareDocs(destination = path.join(ROOT, '.docs-source')) {
   cpSync(path.join(ROOT, 'chart'), path.join(destination, '_demo/chart'), { recursive: true });
   mkdirSync(path.join(destination, 'assets'), { recursive: true });
   cpSync(path.join(ROOT, 'demo/assets/rcpch-logo.svg'), path.join(destination, 'assets/rcpch-logo.svg'));
+  cpSync(path.join(ROOT, 'demo/assets/ohtf-avatar.svg'), path.join(destination, 'assets/ohtf-avatar.svg'));
   mkdirSync(path.join(destination, 'demo'), { recursive: true });
 
   for (const scenario of SCENARIOS) {

@@ -20,17 +20,18 @@ describe('portable OHTF branding', () => {
     expect(manifest.license).toBe('CC-BY-SA-4.0');
     expect(manifest.sourceFiles['docs/stylesheets/extra.css']).toBe(manifest.files['assets/ohtf.css']);
     expect(manifest.sourceFiles['docs/assets/ohtf-mark.svg']).toBe(manifest.files['assets/ohtf-mark.svg']);
+    expect(manifest.sourceFiles['docs/assets/ohtf-avatar.svg']).toBe(manifest.files['assets/ohtf-avatar.svg']);
   });
 
   it('stages exact public assets without requiring a sibling checkout', () => {
     const docs = path.join(temporary, 'docs');
     stageTheme(docs);
-    for (const file of ['ohtf.css', 'ohtf-mark.svg']) {
+    for (const file of ['ohtf.css', 'ohtf-mark.svg', 'ohtf-avatar.svg']) {
       expect(readFileSync(path.join(docs, 'ohtf', file), 'utf8')).toBe(read(`assets/${file}`));
     }
   });
 
-  it.each(['base.yml', 'assets/ohtf.css', 'assets/ohtf-mark.svg'])('rejects drift in %s', file => {
+  it.each(['base.yml', 'assets/ohtf.css', 'assets/ohtf-mark.svg', 'assets/ohtf-avatar.svg'])('rejects drift in %s', file => {
     const copy = path.join(temporary, file.replaceAll('/', '-'));
     cpSync(bundle, copy, { recursive: true });
     writeFileSync(path.join(copy, file), 'unreviewed change');
@@ -62,6 +63,17 @@ describe('portable OHTF branding', () => {
 
   it('retains the last configuration value without a trailing newline', () => {
     expect(configurationBlock('extra:\n  generator: false', 'extra')).toBe('extra:\n  generator: false');
+  });
+
+  it('uses the current official avatar for branding and the demo', () => {
+    expect(read('base.yml')).toContain('logo: ohtf/ohtf-avatar.svg');
+    expect(read('base.yml')).toContain('favicon: ohtf/ohtf-avatar.svg');
+    expect(readFileSync(new URL('../../demo/assets/ohtf-avatar.svg', import.meta.url), 'utf8')).toBe(read('assets/ohtf-avatar.svg'));
+    const demo = readFileSync(new URL('../../demo/demo.html', import.meta.url), 'utf8');
+    expect(demo).toContain('src="assets/ohtf-avatar.svg"');
+    expect(demo).toContain('alt="Open Health Technology Foundation"');
+    const upstream = 'theme:\n  variant: modern\n  logo: assets/ohtf-avatar.svg\n  favicon: assets/ohtf-avatar.svg\nextra:\n  generator: false\n';
+    expect(sharedConfiguration(upstream)).toContain('logo: ohtf/ohtf-avatar.svg');
   });
 
   it('loads branding only in the documentation host, never in chart frames', () => {

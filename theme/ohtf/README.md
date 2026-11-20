@@ -6,7 +6,8 @@ This is a portable, pinned snapshot of the [official OHTF website](https://githu
 
 - `base.yml`: the website's modern variant, Inter/JetBrains Mono typography, mark/favicon, light/dark palettes, navigation behaviour, social links and generator setting. Only the main-site-specific `custom_dir` is removed and the mark's asset paths are relocated.
 - `assets/ohtf.css`: the website's complete stylesheet, copied byte-for-byte, including Surgical Green and its exact tint scale. Landing/adviser selectors remain available for future sites but have no effect without those page classes.
-- `assets/ohtf-mark.svg`: the official mark, copied byte-for-byte.
+- `assets/ohtf-mark.svg`: the official Chamberlen forceps mark, copied byte-for-byte.
+- `assets/ohtf-avatar.svg`: the official circular avatar used for the website header/favicon, copied byte-for-byte. Digital PEWS uses this as its interim project identity until a dedicated PEWS logo is agreed. The demo's copy is drift-tested against this asset.
 - `stage.mjs`: a dependency-free Node adapter that verifies the snapshot and copies its public assets into a site's documentation tree.
 
 The imported branding/configuration is **CC-BY-SA-4.0**, attributed to Open Health Technology Foundation contributors. The adapter is **LGPL-3.0-or-later**, matching Digital PEWS code. Preserve the licence notices and provide the corresponding texts from `LICENSES/` when redistributing. This does not relicense project code, clinical reference material or existing documentation.
@@ -38,6 +39,7 @@ Digital PEWS calls `stageTheme()` from its documentation staging process. PEWS-s
 
 ```bash
 s/sync-ohtf-theme /path/to/openhealthtechnology.org-website
+cp theme/ohtf/assets/ohtf-avatar.svg demo/assets/ohtf-avatar.svg
 s/sync-ohtf-theme --check /path/to/openhealthtechnology.org-website
 ```
 

@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SOURCE_REPOSITORY = 'https://github.com/ohtf/openhealthtechnology.org-website';
-const SOURCE_FILES = ['mkdocs.yml', 'docs/stylesheets/extra.css', 'docs/assets/ohtf-mark.svg'];
+const SOURCE_FILES = ['mkdocs.yml', 'docs/stylesheets/extra.css', 'docs/assets/ohtf-mark.svg', 'docs/assets/ohtf-avatar.svg'];
 const sha256 = data => createHash('sha256').update(data).digest('hex');
 
 // Extract whole top-level mappings, not individual YAML values. This preserves
@@ -22,11 +22,12 @@ export function configurationBlock(config, key) {
 
 export function sharedConfiguration(config) {
   let theme = configurationBlock(config, 'theme');
-  if (!theme.includes('  variant: modern') || !theme.includes('  logo: assets/ohtf-mark.svg') ||
-      !theme.includes('  favicon: assets/ohtf-mark.svg')) throw new Error('Review the changed upstream theme structure before importing');
+  const logo = theme.match(/^  logo: assets\/(ohtf-(?:mark|avatar)\.svg)$/m)?.[1];
+  if (!theme.includes('  variant: modern') || !logo ||
+      !theme.includes(`  favicon: assets/${logo}`)) throw new Error('Review the changed upstream theme structure before importing');
   // Main-site landing/adviser templates are content, not the shared theme.
   theme = theme.replace(/^  custom_dir: overrides\n/m, '')
-    .replaceAll(': assets/ohtf-mark.svg', ': ohtf/ohtf-mark.svg');
+    .replaceAll(`: assets/${logo}`, `: ohtf/${logo}`);
   if (theme.includes('custom_dir:')) throw new Error('Unexpected upstream custom template directory');
   return `# SPDX-FileCopyrightText: 2026 Open Health Technology Foundation contributors
 # SPDX-License-Identifier: CC-BY-SA-4.0
@@ -60,12 +61,14 @@ export function syncTheme(source, { check = false } = {}) {
       'base.yml': sha256(base),
       'assets/ohtf.css': sha256(inputs.get('docs/stylesheets/extra.css')),
       'assets/ohtf-mark.svg': sha256(inputs.get('docs/assets/ohtf-mark.svg')),
+      'assets/ohtf-avatar.svg': sha256(inputs.get('docs/assets/ohtf-avatar.svg')),
     },
   };
   const outputs = new Map([
     ['base.yml', base],
     ['assets/ohtf.css', inputs.get('docs/stylesheets/extra.css')],
     ['assets/ohtf-mark.svg', inputs.get('docs/assets/ohtf-mark.svg')],
+    ['assets/ohtf-avatar.svg', inputs.get('docs/assets/ohtf-avatar.svg')],
     ['manifest.json', `${JSON.stringify(manifest, null, 2)}\n`],
   ]);
   for (const [file, content] of outputs) {

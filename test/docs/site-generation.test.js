@@ -21,6 +21,13 @@ describe('documentation staging', () => {
     expect(config).toContain('name: OHTF on LinkedIn');
   });
 
+  it('stages the demo avatar at the standalone and embedded asset paths', () => {
+    const source = readFileSync(new URL('../../demo/assets/ohtf-avatar.svg', import.meta.url));
+    for (const file of ['assets/ohtf-avatar.svg', '_demo/assets/ohtf-avatar.svg']) {
+      expect(readFileSync(path.join(destination, file)).equals(source)).toBe(true);
+    }
+  });
+
   it('includes every scenario exactly once with an isolated, deep-linked frame', () => {
     for (const scenario of SCENARIOS) {
       expect(config.split(`: demo/${scenario.id}.md`)).toHaveLength(2);

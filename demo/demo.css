@@ -48,6 +48,13 @@ html.demo-embedded .demo-sidebar { display: none; }
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+.demo-sidebar__logo {
+  display: block;
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 0.75rem;
+}
+
 /* White card so the full-colour RCPCH logo reads on any theme background. */
 .demo-logo {
   background: #ffffff;
