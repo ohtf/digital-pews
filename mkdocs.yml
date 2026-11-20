@@ -13,6 +13,24 @@ site_dir: site
 extra_css:
   - ohtf/ohtf.css
   - stylesheets/extra.css
+# Inherited lists are replaced, so retain the shared links when adding LinkedIn.
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/ohtf
+      name: OHTF on GitHub
+    - icon: fontawesome/brands/x-twitter
+      link: https://x.com/ohtfdotorg
+      name: OHTF on X
+    - icon: fontawesome/brands/bluesky
+      link: https://bsky.app/profile/openhealthtech.bsky.social
+      name: OHTF on Bluesky
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/147007030
+      name: OHTF on LinkedIn
+    - icon: lucide/mail
+      link: mailto:hello@openhealthtechnology.org
+      name: Email OHTF
 copyright: >-
   A Foundation Project of <a href="https://openhealthtechnology.org/">Open Health Technology Foundation</a>.<br>
   Open Health Technology CIC is a community interest company registered in England and Wales,

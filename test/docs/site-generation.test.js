@@ -13,6 +13,14 @@ const { config, destination } = prepareDocs(path.join(temporary, '.docs-source')
 afterAll(() => rmSync(temporary, { recursive: true, force: true }));
 
 describe('documentation staging', () => {
+  it('includes the LinkedIn footer link without dropping the existing social links', () => {
+    for (const link of ['https://github.com/ohtf', 'https://x.com/ohtfdotorg', 'https://bsky.app/profile/openhealthtech.bsky.social', 'https://www.linkedin.com/company/147007030', 'mailto:hello@openhealthtechnology.org']) {
+      expect(config).toContain(`link: ${link}`);
+    }
+    expect(config).toContain('icon: fontawesome/brands/linkedin');
+    expect(config).toContain('name: OHTF on LinkedIn');
+  });
+
   it('includes every scenario exactly once with an isolated, deep-linked frame', () => {
     for (const scenario of SCENARIOS) {
       expect(config.split(`: demo/${scenario.id}.md`)).toHaveLength(2);
