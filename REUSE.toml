@@ -1,6 +1,26 @@
 version = 1
 
 [[annotations]]
+path = ["presentations/README.md", "presentations/pcht2026/img/ohtf-avatar.svg", "presentations/pcht2026/img/usb-*.svg"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Open Health Technology Foundation contributors"
+SPDX-License-Identifier = "CC-BY-SA-4.0"
+
+[[annotations]]
+path = ["presentations/pcht2026/img/inpatient-chart.png"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = ["2026 The Royal College of Paediatrics and Child Health", "2026 Open Health Technology Foundation contributors"]
+SPDX-License-Identifier = "LGPL-3.0-or-later"
+
+[[annotations]]
+# Cropped text excerpt of the public 2 November 2026 announcement; no NHS logo.
+# https://www.england.nhs.uk/long-read/national-paediatric-early-warning-system-pews-for-emergency-departments/
+path = ["presentations/pcht2026/img/nhse-announcement.png"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 NHS England"
+SPDX-License-Identifier = "OGL-UK-3.0"
+
+[[annotations]]
 # Synthetic inpatient chart capture, 18 November 2026; cropped upper rows.
 # Source: demo scenario 5-12y-deterioration, rendered by the project component.
 path = ["docs/img/inpatient-chart.png"]

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="420" viewBox="0 0 1100 420" role="img" aria-label="USB connector assembly illustration, not a wiring guide">
+  <rect x="105" y="117" width="225" height="150" rx="8" fill="#cfdbd8" stroke="#3d6e62" stroke-width="6"/>
+  <rect x="117" y="132" width="150" height="120" fill="#ffffff"/>
+  <rect x="330" y="140" width="115" height="105" rx="4" fill="#e7edeb" stroke="#3d6e62" stroke-width="4"/>
+  <path d="M445 155H495M445 178H495M445 201H495M445 224H495" stroke="#3d6e62" stroke-width="10"/>
+  <path d="M610 148C730 148 645 205 805 205M610 186C690 186 705 216 805 216M610 224C705 224 710 227 805 227M610 262C740 262 695 238 805 238" fill="none" stroke="#3d6e62" stroke-width="8"/>
+  <path d="M580 148H611M580 186H611M580 224H611M580 262H611" stroke="#9eb7b1" stroke-width="8"/>
+  <path d="M805 222H1080" stroke="#0d4a3b" stroke-width="48" stroke-linecap="round"/>
+  <g transform="rotate(-32 560 90)">
+    <rect x="545" y="-15" width="43" height="120" rx="13" fill="#0d4a3b"/>
+    <path d="M552 104H581L576 150H557Z" fill="#cfdbd8" stroke="#3d6e62" stroke-width="3"/>
+    <path d="M557 150L561 186L572 150Z" fill="#3d6e62"/>
+  </g>
+  <circle cx="452" cy="178" r="8" fill="#9eb7b1"/>
+  <path d="M235 351C235 305 355 305 355 351S235 397 235 351ZM250 351C250 323 340 323 340 351S250 379 250 351Z" fill="#cfdbd8" stroke="#3d6e62" stroke-width="4"/>
+  <path d="M355 351C420 351 402 283 482 267" fill="none" stroke="#9eb7b1" stroke-width="5"/>
+</svg>

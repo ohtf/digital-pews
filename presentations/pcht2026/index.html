@@ -1,0 +1,175 @@
+<!doctype html>
+<!-- SPDX-FileCopyrightText: 2026 Open Health Technology Foundation contributors
+     SPDX-License-Identifier: CC-BY-SA-4.0 -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Open Source Digital PEWS Charts (Is The Only Way)</title>
+  <link rel="icon" href="img/ohtf-avatar.svg" type="image/svg+xml">
+
+  <!-- CDN structure adapted from pacharanero/reveal-js-cdn-template.
+       Content scaffold: revealjs skill. No unpublished NHSE sources included. -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@6.0.1/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@6.0.1/dist/reveal.css">
+
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section id="chart-first" class="opening">
+        <h1>Open Source Digital PEWS Charts</h1>
+        <p class="subtitle">(Is The Only Way)</p>
+        <div class="content">
+          <img class="chart-shot" src="img/inpatient-chart.png" alt="Digital PEWS inpatient chart showing synthetic respiratory, oxygen and heart-rate observations over time.">
+        </div>
+        <p class="footnote">Inpatient NPEWS prototype · synthetic data · not approved for clinical use</p>
+        <p class="presenter">Dr Marcus Baw · PCHT2026</p>
+        <aside class="notes">0:00–1:00. Start with the actual chart. This is the current inpatient implementation, using synthetic data. It is a scoring and observation-chart component for embedding in clinical systems. ED support is planned, not implemented. No clinically approved release has been designated. Keep the introduction short; move straight to the announcement.</aside>
+      </section>
+
+      <section id="announcement">
+        <h2>NHS England, 2 November 2026</h2>
+        <div class="content" style="display:grid;grid-template-columns:700px 420px;gap:48px;align-items:center">
+          <a href="https://www.england.nhs.uk/long-read/national-paediatric-early-warning-system-pews-for-emergency-departments/" aria-label="Read the public NHS England ED-PEWS announcement"><img class="announcement-shot" src="img/nhse-announcement.png" alt="Public NHS England announcement of ED PEWS, including EPR integration and adoption milestones."></a>
+          <div class="dates">
+            <p>April 2027</p><p class="date-label">Local plans</p>
+            <p>April 2028</p><p class="date-label">Implementation complete</p>
+          </div>
+        </div>
+        <p class="footnote">Source: NHS England, “National PEWS for emergency departments” · linked screenshot</p>
+        <aside class="notes">1:00–2:00. Public announcement only. April 2027 is the deadline for local adoption plans, including integration into electronic patient record systems. April 2028 is the implementation deadline. Do not describe April 2027 as the mandated start of development. The letter does mention digital integration. Recheck the announcement before the conference.</aside>
+      </section>
+
+      <section id="timeline-stack">
+        <section id="delivery-time">
+          <h2>How many months are left?</h2>
+          <p class="lead">Suppose funded procurement starts in April 2027.</p>
+          <div class="timeline" role="img" aria-label="Illustrative timeline. Six-month procurement ends October 2027, leaving six months before April 2028. Eighteen-month procurement ends October 2028, six months after the deadline.">
+            <div class="timeline-labels"><p>Apr 2027</p><p>Oct 2027</p><p>Apr 2028</p><p>Oct 2028</p></div>
+            <div class="timeline-lane"><p class="bar short">Procurement: 6 months</p><p class="remaining">6 months left</p></div>
+            <div class="timeline-lane"><p class="bar long">Procurement: 18 months</p></div>
+            <div class="deadline"><p>Deadline</p></div>
+          </div>
+          <p class="timeline-after">Development, integration, assurance and rollout still need time.</p>
+          <p class="footnote">Illustration, not a forecast. Procurement range is the speaker’s estimate, not a cited benchmark.</p>
+          <aside class="notes">2:00–3:15. Six and eighteen months are illustrative assumptions supplied by Marcus, not verified national procurement statistics. In the short scenario only six months remain; the long scenario finishes procurement six months after the implementation deadline. Existing contracts, earlier work and available products may shorten the route. Clinical safety runs throughout development; do not depict it as a last-minute sign-off. Down arrow opens the assumptions slide; right arrow continues to cost.</aside>
+        </section>
+        <section id="timeline-assumptions">
+          <h2>What this timeline assumes</h2>
+          <div class="content spacious-list">
+            <p>A new procurement starts in April 2027.</p>
+            <p>The 6–18-month range needs evidence.</p>
+            <p>Existing contracts may shorten the route.</p>
+            <p>Clinical safety work runs throughout.</p>
+          </div>
+          <p class="footnote">Optional discussion slide · no quantified cost or delivery saving is claimed</p>
+          <aside class="notes">Backup only. The national planning date does not prevent earlier procurement or development. This is a scenario about the remaining time, not a prediction that every Trust will miss its deadline. Do not add development and assurance durations as if all work must be sequential.</aside>
+        </section>
+      </section>
+
+      <section id="repeated-cost">
+        <h2>How many times are we paying?</h2>
+        <div class="content">
+          <p class="diagram-source">One clinical specification</p>
+          <div class="branch-lines" aria-hidden="true"></div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:30px">
+            <div class="supplier"><h3>Supplier A</h3><p>Build + verify</p><p>Maintain</p></div>
+            <div class="supplier"><h3>Supplier B</h3><p>Build + verify</p><p>Maintain</p></div>
+            <div class="supplier"><h3>Supplier C</h3><p>Build + verify</p><p>Maintain</p></div>
+          </div>
+          <p class="under-diagram">Local integration and deployment assurance, too.</p>
+        </div>
+        <p class="footnote">Conceptual illustration · no supplier prices or measured savings claimed</p>
+        <aside class="notes">3:15–4:30. Each supplier independently implementing the standard repeats interpretation, engineering, verification and future maintenance. A supplier may reuse its product across Trusts; do not imply each Trust necessarily pays for a completely separate build. We have no defensible total programme cost or measured saving. The argument is about avoidable repeated work and commissioning friction.</aside>
+      </section>
+
+      <section id="plug-it-in" class="question-slide">
+        <h2>Could you plug this in?</h2>
+        <div class="content"><img class="usb-picture" src="img/usb-plug.svg" alt="Illustration of an assembled USB-A plug and cable."></div>
+        <aside class="notes">4:30–5:15. Hold up a real USB-A plug if available. Ask: How many people here would be able to plug in a USB-A connector? Ask for a show of hands and wait. Do not explain the comparison yet.</aside>
+      </section>
+
+      <section id="solder-it" class="question-slide">
+        <h2>Keep your hand up<br>if you could solder it.</h2>
+        <div class="content"><img class="usb-picture" src="img/usb-solder.svg" alt="Illustration of an unassembled USB-A connector, four loose wires and a soldering iron."></div>
+        <aside class="notes">5:15–6:30. Let hands drop. A specification for PEWS asks people to do the soldering. A premade PEWS component is the USB plug. Suppliers still need a compatible interface and must verify their finished system. The analogy is about reducing repeated construction work, not claiming medical software can be installed without clinical assurance.</aside>
+      </section>
+
+      <section id="shared-component">
+        <h2>A shared PEWS component</h2>
+        <div class="content">
+          <div class="component-core"><p>Open-source chart + scoring</p></div>
+          <div class="branch-lines" aria-hidden="true"></div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:30px">
+            <div class="integration"><p>EPR A</p></div>
+            <div class="integration"><p>EPR B</p></div>
+            <div class="integration"><p>EPR C</p></div>
+          </div>
+          <p class="under-diagram">Each host keeps its records and clinical workflow.</p>
+        </div>
+        <p class="footnote">Proposed integration model · these are illustrative hosts, not deployed integrations</p>
+        <aside class="notes">6:30–8:15. This is the component proposal. The current runtime is a framework-neutral Web Component using native browser modules. Hosts supply patient and observation data. The component calculates supported results and renders the chart. The EPR still owns entry, persistence, audit, permissions and operational escalation. Open source permits independent inspection and shared contribution. It does not remove local integration or deployment assurance.</aside>
+      </section>
+
+      <section id="clinical-assurance">
+        <h2>Clinical assurance still takes work.</h2>
+        <div class="content assurance">
+          <p>Test the clinical rules.</p>
+          <p>Check the rendered chart.</p>
+          <p>Assess the integrated system.</p>
+        </div>
+        <p class="footnote">No clinically approved Digital PEWS release has been designated.</p>
+        <aside class="notes">8:15–10:00. These are three concrete areas of assurance, not a complete safety process. Explain one example: a skipped observation must break a trend line. Another is that missing data must not provide false reassurance. Automated evidence does not establish clinical approval. Be candid about incomplete validation and browser-regression evidence. Shared work can provide reusable evidence, but the supplier/deployer must assess the actual integrated system and residual risks.</aside>
+      </section>
+
+      <section id="ed-next">
+        <h2>ED-PEWS is next.</h2>
+        <div class="content" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+          <div class="profile"><h3>Inpatient NPEWS</h3><p>Prototype available</p></div>
+          <div class="profile planned"><h3>ED-PEWS</h3><p>Separate component proposed</p></div>
+        </div>
+        <p class="footnote">ED runtime not implemented · no clinical approval claimed for either component</p>
+        <aside class="notes">10:00–11:30. ED context comes from public NHS England material only: triage focus, GCS and carer concerns. A separate ED component is proposed so clinical identity and policy remain explicit. Share generic mechanics where appropriate, not an unreviewed clinical algorithm. Do not present restricted alpha requirements or private correspondence, including in backup slides. Current inpatient development must remain protected from ED-specific changes.</aside>
+      </section>
+
+      <section id="join-in" class="closing">
+        <img class="ohtf-mark" src="img/ohtf-avatar.svg" alt="Open Health Technology Foundation">
+        <h2>Who wants to help?</h2>
+        <div class="content">
+          <p class="closing-ask">Clinical review and integration partners.</p>
+          <p><a href="https://github.com/ohtf/digital-pews">github.com/ohtf/digital-pews</a></p>
+          <p><a href="mailto:pews@openhealthtechnology.org">pews@openhealthtechnology.org</a></p>
+        </div>
+        <p class="footnote">Started in the RCPCH Incubator. Development now continues under OHTF.</p>
+        <aside class="notes">11:30–13:00, leaving two minutes for questions or overrun. Preserve the original RCPCH attribution. Current stewardship is Open Health Technology Foundation; this does not imply ongoing RCPCH sponsorship or NHSE endorsement. Invitation is provisional: Marcus should confirm whether the main ask is clinical review, supplier integration, funding or another form of support. The public project contains development code, not a clinically approved product.</aside>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@6.0.1/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@6.0.1/dist/plugin/notes.js"></script>
+  <script>
+    Reveal.initialize({
+      width: 1280,
+      height: 720,
+      margin: 0,
+      controls: true,
+      progress: true,
+       slideNumber: 'h.v',
+      hash: true,
+       transition: 'none',
+      center: false,
+       navigationMode: 'grid',
+       pdfSeparateFragments: false,
+       plugins: [ RevealNotes ]
+    });
+  </script>
+</body>
+</html>

@@ -6,6 +6,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ROOT } from './prepare-docs.mjs';
 
+// Explicit publication boundary: never copy a private workspace or an entire
+// presentation directory, which could acquire prep notes or review captures.
+export const PCHT2026_FILES = [
+  'index.html', 'styles.css', 'img/inpatient-chart.png', 'img/nhse-announcement.png',
+  'img/ohtf-avatar.svg', 'img/usb-plug.svg', 'img/usb-solder.svg',
+];
+
 function htmlFiles(directory) {
   return readdirSync(directory, { withFileTypes: true }).flatMap(entry => {
     const file = path.join(directory, entry.name);
@@ -40,9 +47,23 @@ export function assembleSite(root = ROOT) {
   const demoPage = path.join(output, 'demo.html');
   writeFileSync(demoPage, readFileSync(demoPage, 'utf8').replace('href="https://ohtf.github.io/digital-pews/"', 'href="./"'));
   cpSync(path.join(root, 'chart'), path.join(output, 'chart'), { recursive: true });
+  const presentation = path.join(root, 'presentations/pcht2026');
+  if (existsSync(presentation)) {
+    const destination = path.join(output, 'pcht2026');
+    if (existsSync(destination)) throw new Error('Presentation/docs path collision: pcht2026');
+    const html = readFileSync(path.join(presentation, 'index.html'), 'utf8');
+    if (!/<meta name="robots" content="noindex, nofollow">/.test(html)) {
+      throw new Error('PCHT2026 must remain unlisted with a noindex robots tag');
+    }
+    for (const file of PCHT2026_FILES) {
+      const target = path.join(destination, file);
+      mkdirSync(path.dirname(target), { recursive: true });
+      cpSync(path.join(presentation, file), target);
+    }
+  }
   // The same logo is already part of the Zensical assets; do not overwrite its
   // generated CSS/JS asset tree with an entire demo directory.
-  console.log('Assembled root documentation, standalone demos and /docs/ redirects in _site/.');
+  console.log('Assembled root documentation, standalone demos, unlisted presentations and /docs/ redirects in _site/.');
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) assembleSite();

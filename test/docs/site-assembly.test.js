@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
 import { afterEach, describe, expect, it } from 'vitest';
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { assembleSite } from '../../s/assemble-site.mjs';
+import { assembleSite, PCHT2026_FILES } from '../../s/assemble-site.mjs';
 
 const directories = [];
 afterEach(() => directories.splice(0).forEach(directory => rmSync(directory, { recursive: true, force: true })));
@@ -18,6 +18,8 @@ function fixture() {
     'site/demo/example/index.html': '<h1>Scenario page</h1>',
     'site/reference-sources/chart.pdf': '%PDF-test-download',
     'site/assets/theme.css': '/* Zensical assets */',
+    'site/search.json': '{"pages":["index.html"]}',
+    'site/sitemap.xml': '<urlset><url><loc>https://example.invalid/</loc></url></urlset>',
     'demo/index.html': '<h1>Single chart</h1>',
     'demo/demo.html': '<a href="https://ohtf.github.io/digital-pews/">Documentation</a>',
     'demo/demo.js': '// Standalone harness',
@@ -28,6 +30,19 @@ function fixture() {
     writeFileSync(path.join(root, file), content);
   }
   return root;
+}
+
+function presentationFixture(root) {
+  const source = path.join(root, 'presentations/pcht2026');
+  for (const file of PCHT2026_FILES) {
+    const target = path.join(source, file);
+    mkdirSync(path.dirname(target), { recursive: true });
+    writeFileSync(target, file === 'index.html'
+      ? '<meta name="robots" content="noindex, nofollow"><h1>Slide draft</h1>'
+      : `public asset: ${file}`);
+  }
+  writeFileSync(path.join(source, 'prep-notes.md'), 'Do not publish');
+  return source;
 }
 
 describe('root documentation site assembly', () => {
@@ -60,5 +75,32 @@ describe('root documentation site assembly', () => {
     const root = fixture();
     writeFileSync(path.join(root, 'site/demo.html'), 'Unexpected generated page');
     expect(() => assembleSite(root)).toThrow('path collision: demo.html');
+  });
+
+  it('publishes only reviewed presentation assets without changing docs, search or sitemap', () => {
+    const root = fixture();
+    const source = presentationFixture(root);
+    assembleSite(root);
+    const output = path.join(root, '_site');
+    for (const file of PCHT2026_FILES) {
+      expect(readFileSync(path.join(output, 'pcht2026', file), 'utf8')).toBe(readFileSync(path.join(source, file), 'utf8'));
+    }
+    expect(existsSync(path.join(output, 'pcht2026/prep-notes.md'))).toBe(false);
+    expect(existsSync(path.join(output, 'docs/pcht2026'))).toBe(false);
+    for (const file of ['index.html', 'search.json', 'sitemap.xml']) {
+      const content = readFileSync(path.join(output, file), 'utf8');
+      expect(content).toBe(readFileSync(path.join(root, 'site', file), 'utf8'));
+      expect(content).not.toContain('pcht2026');
+    }
+  });
+
+  it('rejects presentation collisions and accidental removal of noindex', () => {
+    const root = fixture();
+    const source = presentationFixture(root);
+    mkdirSync(path.join(root, 'site/pcht2026'));
+    expect(() => assembleSite(root)).toThrow('Presentation/docs path collision');
+    rmSync(path.join(root, 'site/pcht2026'), { recursive: true });
+    writeFileSync(path.join(source, 'index.html'), '<h1>Missing robots metadata</h1>');
+    expect(() => assembleSite(root)).toThrow('must remain unlisted');
   });
 });
